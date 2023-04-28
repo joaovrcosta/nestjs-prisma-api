@@ -25,27 +25,27 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() { email, password }: AuthLoginDTO) {
-    return this.authService.login(email, password);
+    return this.authService.loginUser(email, password);
   }
 
   @Post('register')
   async register(@Body() body: AuthRegisterDTO) {
-    return this.authService.register(body);
+    return this.authService.registerUser(body);
   }
 
   @Post('forget')
   async forget(@Body() { email }: AuthForgetDTO) {
-    return this.authService.forget(email);
+    return this.authService.forgetUser(email);
   }
 
   @Post('reset')
   async reset(@Body() { password, token }: AuthResetDTO) {
-    return this.authService.reset(password, token);
+    return this.authService.resetUser(password, token);
   }
 
   @UseGuards(AuthGuard)
   @Post('me')
-  async me(@User('email') user) {
+  async me(@User() user) {
     return { user };
   }
 }

@@ -14,8 +14,6 @@ export const User = createParamDecorator(
       } else {
         return request.user;
       }
-
-      return request.user;
     } else {
       throw new NotFoundException('User not found, guard not found');
     }

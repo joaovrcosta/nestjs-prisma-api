@@ -1,5 +1,4 @@
 import {
-  BadGatewayException,
   BadRequestException,
   Injectable,
   UnauthorizedException,
@@ -16,9 +15,9 @@ export class AuthService {
   private audience = 'students';
 
   constructor(
-    private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
-    private readonly userService: UserService,
+    private readonly jwtService: JwtService, //JWT Service
+    private readonly prisma: PrismaService, //Prisma Service
+    private readonly userService: UserService, //Users Service
   ) {}
 
   createToken(user: User) {
@@ -59,7 +58,7 @@ export class AuthService {
     }
   }
 
-  async login(email: string, password: string) {
+  async loginUser(email: string, password: string) {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
@@ -74,13 +73,13 @@ export class AuthService {
     return this.createToken(user);
   }
 
-  async register(data: AuthRegisterDTO) {
+  async registerUser(data: AuthRegisterDTO) {
     const user = await this.userService.createNewUser(data);
 
     return this.createToken(user);
   }
 
-  async forget(email: string) {
+  async forgetUser(email: string) {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
@@ -96,7 +95,7 @@ export class AuthService {
     return true;
   }
 
-  async reset(password: string, token: string) {
+  async resetUser(password: string, token: string) {
     // If token is valid, reset the password
 
     const id = 0;
